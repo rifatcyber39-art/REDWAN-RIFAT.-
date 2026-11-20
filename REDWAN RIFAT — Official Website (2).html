@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REDWAN RIFAT — Official Website</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #05070e;
+      --bg-card: rgba(11, 15, 28, 0.84);
+      --border-subtle: rgba(148, 163, 184, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: #e2e8f0;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Clean dark IDE grid */
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(34, 211, 238, 0.045) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Balanced studio-grade ambient glow */
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(79, 70, 229, 0.14) 0%, transparent 44%),
+        radial-gradient(circle at 84% 28%, rgba(6, 182, 212, 0.10) 0%, transparent 42%),
+        radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.08) 0%, transparent 45%);
+    }
+
+    /* Coding canvas layer */
+    #codeBgCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Sleek dark glass cards */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.82);
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(34, 211, 238, 0.38);
+      box-shadow: 0 16px 38px -12px rgba(79, 70, 229, 0.24), 0 0 18px -8px rgba(34, 211, 238, 0.20);
+      transform: translateY(-2px);
+    }
+
+    /* Professional Indigo-to-Cyan pill CTA */
+    .cta-pill {
+      background: linear-gradient(135deg, #4338ca 0%, #2563eb 52%, #0891b2 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 10px 26px -8px rgba(79, 70, 229, 0.48), 0 6px 18px -8px rgba(8, 145, 178, 0.42);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+    }
+
+    .cta-pill:hover {
+      transform: translateY(-2px) scale(1.008);
+      box-shadow: 0 14px 32px -8px rgba(79, 70, 229, 0.62), 0 8px 22px -8px rgba(34, 211, 238, 0.48);
+      filter: brightness(1.07);
+    }
+
+    /* Rotating badge ring for featured card */
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spin-slow {
+      animation: spinSlow 14s linear infinite;
+    }
+
+    /* Standard professional hero name entrance animation */
+    @keyframes charReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(26px) scale(0.88);
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes textShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-char {
+      display: inline-block;
+      opacity: 0;
+      background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 35%, #67e8f9 65%, #ffffff 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation:
+        charReveal 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+        textShimmer 8s ease-in-out 2.2s infinite;
+    }
+
+    .hero-fade-1 {
+      opacity: 0;
+      animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1.65s forwards;
+    }
+
+    .hero-fade-2 {
+      opacity: 0;
+      animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1.95s forwards;
+    }
+
+    /* Favorites page staggered opening animation */
+    @keyframes favSectionIn {
+      0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+        filter: blur(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .fav-animate .fav-stagger {
+      opacity: 0;
+      animation: favSectionIn 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .fav-animate .fav-d1 { animation-delay: 0.15s; }
+    .fav-animate .fav-d2 { animation-delay: 0.38s; }
+    .fav-animate .fav-d3 { animation-delay: 0.62s; }
+    .fav-animate .fav-d4 { animation-delay: 0.86s; }
+    .fav-animate .fav-d5 { animation-delay: 1.10s; }
+    .fav-animate .fav-d6 { animation-delay: 1.34s; }
+    .fav-animate .fav-d7 { animation-delay: 1.54s; }
+    .fav-animate .fav-d8 { animation-delay: 1.74s; }
+
+    /* Special Lock & Romantic Accent for Samiya Zannat Minha Page */
+    .minha-card {
+      background: linear-gradient(145deg, rgba(20, 10, 26, 0.88), rgba(11, 15, 28, 0.90));
+      border: 1px solid rgba(244, 114, 182, 0.24);
+      box-shadow: 0 18px 42px -14px rgba(244, 63, 94, 0.22), 0 0 24px -10px rgba(168, 85, 247, 0.18);
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .shake-error {
+      animation: shakeError 0.35s ease;
+    }
+
+    /* Sidebar active link */
+    .drawer-nav-item.active {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.32), rgba(8, 145, 178, 0.28));
+      border-color: rgba(34, 211, 238, 0.45);
+      color: #ffffff;
+    }
+
+    .region-tab.active {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.35), rgba(8, 145, 178, 0.35));
+      border-color: rgba(34, 211, 238, 0.65);
+      color: #ffffff;
+    }
+
+    /* Skill tab active state */
+    .skill-pill.active {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.35), rgba(8, 145, 178, 0.35));
+      border-color: rgba(34, 211, 238, 0.65);
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.22);
+    }
+  </style>
+</head>
+<body class="grid-bg relative selection:bg-indigo-600/40 selection:text-white">
+  <!-- Visible Coding Syntax Background & Ambient Glow -->
+  <canvas id="codeBgCanvas" aria-hidden="true"></canvas>
+  <div class="ambient-glow"></div>
+
+  <!-- Sticky Top Bar -->
+  <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-[#05070e]/85 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-2xl items-center justify-between px-4 py-3 sm:px-6">
+      <a href="#top" class="flex items-center gap-3 group">
+        <!-- Indigo-Cyan Monogram Avatar -->
+        <div class="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-400 p-[2px] shadow-md shadow-indigo-950/60">
+          <div class="flex h-full w-full items-center justify-center rounded-full bg-[#070a14] text-xs font-extrabold tracking-tight text-white">
+            RR
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-sm font-bold tracking-wide text-slate-100 group-hover:text-cyan-300 transition-colors">REDWAN RIFAT</span>
+            <!-- Verified Badge -->
+            <svg class="h-4 w-4 text-cyan-400" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
+              <path d="M12 2l2.39 1.89 3.01-.36 1.15 2.8 2.66 1.47-.46 2.99 1.66 2.54-1.66 2.54.46 2.99-2.66 1.47-1.15 2.8-3.01-.36L12 22l-2.39-1.89-3.01.36-1.15-2.8-2.66-1.47.46-2.99L1.59 12l1.66-2.54-.46-2.99 2.66-1.47 1.15-2.8 3.01.36L12 2zm-1.1 13.4l5.2-5.2-1.4-1.4-3.8 3.8-1.8-1.8-1.4 1.4 3.2 3.2z"/>
+            </svg>
+          </div>
+          <p class="font-mono-code text-[10px] font-medium uppercase tracking-[0.2em] text-slate-400">Official Website</p>
+        </div>
+      </a>
+
+      <!-- Side Slide Bar Trigger Button -->
+      <button id="menuToggleBtn" type="button" aria-label="Open side navigation" aria-expanded="false"
+        class="flex h-10 items-center gap-2 rounded-full border border-slate-700/70 bg-[#0c1120] px-3.5 text-xs font-semibold text-slate-200 hover:border-cyan-400/50 hover:text-white transition">
+        <svg class="h-4 w-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="4" y1="7" x2="20" y2="7"></line>
+          <line x1="4" y1="12" x2="15" y2="12"></line>
+          <line x1="4" y1="17" x2="20" y2="17"></line>
+        </svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide-out Side Drawer & Backdrop -->
+  <div id="drawerBackdrop" class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+  <aside id="sideDrawer" aria-label="Side navigation"
+    class="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85vw] translate-x-full flex-col justify-between border-l border-slate-800 bg-[#070a14]/95 p-5 shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-out">
+    <div>
+      <div class="mb-6 flex items-center justify-between border-b border-slate-800/80 pb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-cyan-400 text-[11px] font-extrabold text-white">RR</div>
+          <div>
+            <div class="text-xs font-bold text-white">REDWAN RIFAT</div>
+            <div class="font-mono-code text-[10px] text-cyan-400">Navigation</div>
+          </div>
+        </div>
+        <button id="closeDrawerBtn" type="button" aria-label="Close side menu"
+          class="flex h-8 w-8 items-center justify-center rounded-full border border-slate-700/70 bg-slate-900 text-slate-300 hover:border-cyan-400/50 hover:text-white transition">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <p class="font-mono-code mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Pages</p>
+      <div class="mb-5 space-y-2">
+        <button id="drawerHomeBtn" type="button" data-drawer-page="home"
+          class="drawer-nav-item active flex w-full items-center justify-between rounded-xl border border-slate-800 bg-[#0c1120]/70 px-3.5 py-2.5 text-left text-sm font-semibold text-slate-200 transition hover:border-cyan-400/40">
+          <span>Home &amp; Profile</span>
+          <span class="text-xs text-slate-400">→</span>
+        </button>
+        <button id="goFavoritesMenuBtn" type="button" data-drawer-page="favorites"
+          class="drawer-nav-item flex w-full items-center justify-between rounded-xl border border-slate-800 bg-[#0c1120]/70 px-3.5 py-2.5 text-left text-sm font-semibold text-slate-200 transition hover:border-cyan-400/40">
+          <span>My Favorites</span>
+          <span class="text-xs text-slate-400">→</span>
+        </button>
+        <button id="goFamilyMenuBtn" type="button" data-drawer-page="family"
+          class="drawer-nav-item flex w-full items-center justify-between rounded-xl border border-slate-800 bg-[#0c1120]/70 px-3.5 py-2.5 text-left text-sm font-semibold text-slate-200 transition hover:border-cyan-400/40">
+          <span>Family Introduction</span>
+          <span class="text-xs text-slate-400">→</span>
+        </button>
+        <button id="goFriendMenuBtn" type="button" data-drawer-page="bestfriend"
+          class="drawer-nav-item flex w-full items-center justify-between rounded-xl border border-slate-800 bg-[#0c1120]/70 px-3.5 py-2.5 text-left text-sm font-semibold text-slate-200 transition hover:border-cyan-400/40">
+          <span>Best Friend</span>
+          <span class="text-xs text-slate-400">→</span>
+        </button>
+        <button id="goMinhaMenuBtn" type="button" data-drawer-page="minha"
+          class="drawer-nav-item flex w-full items-center justify-between rounded-xl border border-rose-500/30 bg-rose-950/20 px-3.5 py-2.5 text-left text-sm font-semibold text-rose-200 transition hover:border-rose-400/60">
+          <span>My Everything</span>
+          <span class="rounded-full bg-rose-500/20 px-2 py-0.5 text-[10px] font-bold text-rose-300">Locked</span>
+        </button>
+      </div>
+
+      <p class="font-mono-code mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Quick Sections</p>
+      <div class="space-y-1">
+        <a href="#top" data-jump="home" class="nav-link block rounded-xl px-3.5 py-2 text-xs font-medium text-slate-300 hover:bg-indigo-600/20 hover:text-white transition">Overview</a>
+        <a href="#skills" data-jump="home" class="nav-link block rounded-xl px-3.5 py-2 text-xs font-medium text-slate-300 hover:bg-indigo-600/20 hover:text-white transition">Skills &amp; Expertise</a>
+        <a href="#about" data-jump="home" class="nav-link block rounded-xl px-3.5 py-2 text-xs font-medium text-slate-300 hover:bg-indigo-600/20 hover:text-white transition">Study &amp; Home</a>
+        <a href="#connect" data-jump="home" class="nav-link block rounded-xl px-3.5 py-2 text-xs font-medium text-slate-300 hover:bg-indigo-600/20 hover:text-white transition">Direct Message</a>
+      </div>
+    </div>
+
+    <div class="border-t border-slate-800/80 pt-4">
+      <button id="copyLinkMenuBtn" type="button"
+        class="w-full rounded-xl border border-cyan-500/30 bg-cyan-950/30 px-3.5 py-2.5 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/20 hover:text-white transition">
+        Copy WhatsApp: 01735982166
+      </button>
+    </div>
+  </aside>
+
+  <main id="top" class="relative z-10 mx-auto max-w-2xl px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
+    <div id="pageHome">
+    <!-- Coding-style Eyebrow -->
+    <div class="mb-4 flex items-center gap-3">
+      <span class="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+      <span class="font-mono-code text-[11px] font-medium uppercase tracking-[0.2em] text-indigo-300">&lt;welcome_creative_portfolio /&gt;</span>
+      <div class="h-px flex-1 bg-gradient-to-r from-indigo-500/35 via-cyan-500/25 to-transparent"></div>
+    </div>
+
+    <!-- Hero Title & Simple Standard Subtitle -->
+    <section class="mb-7">
+      <h1 id="heroName" class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl" aria-label="REDWAN RIFAT">
+        REDWAN RIFAT
+      </h1>
+      <p class="hero-fade-1 mt-2 text-base font-medium tracking-normal text-cyan-300 sm:text-lg">
+        Web Designer • Graphics Designer • Video Editor
+      </p>
+      <p class="hero-fade-2 mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
+        Passionate about crafting modern websites, bold visual graphics, and engaging video edits — turning creative ideas into clean, memorable digital experiences.
+      </p>
+    </section>
+
+    <!-- Primary CTA Pill: WhatsApp -->
+    <section class="mb-3.5">
+      <a href="https://wa.me/8801735982166" target="_blank" rel="noopener noreferrer"
+        class="cta-pill group flex items-center justify-between rounded-full p-2.5 pl-3.5 pr-2.5">
+        <div class="flex items-center gap-3.5">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black/25 backdrop-blur-md border border-white/15">
+            <!-- WhatsApp Icon -->
+            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.79 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.07-1.13.1-1.82-.12-.42-.13-.96-.31-1.65-.61-2.9-1.26-4.79-4.18-4.94-4.38-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.59-.36.79-.36h.56c.18 0 .42-.07.66.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.14.14-.3.3-.13.59.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.44.29.15.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.15.26.1 1.66.78 1.94.92.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white sm:text-base">Chat on WhatsApp</div>
+            <div class="font-mono-code text-xs font-medium text-white/80">01735982166</div>
+          </div>
+        </div>
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-slate-900 shadow transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </div>
+      </a>
+    </section>
+
+    <!-- Secondary 2-Column Social Cards: Facebook & Instagram -->
+    <section class="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/share/198oUaPkfV/" target="_blank" rel="noopener noreferrer"
+        class="glass-card group flex items-center justify-between rounded-2xl p-3.5">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-950/70 border border-indigo-500/30 text-indigo-300">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm font-semibold text-slate-100">Facebook</div>
+            <div class="text-xs text-slate-400">Redwan Rifat</div>
+          </div>
+        </div>
+        <svg class="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/redwan_rifu369?hvrq=djRvaXhlcWRnMzBp" target="_blank" rel="noopener noreferrer"
+        class="glass-card group flex items-center justify-between rounded-2xl p-3.5">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-950/70 border border-cyan-500/30 text-cyan-300">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm font-semibold text-slate-100">Instagram</div>
+            <div class="text-xs text-slate-400">@redwan_rifu369</div>
+          </div>
+        </div>
+        <svg class="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </a>
+    </section>
+
+    <!-- Featured Showcase Card -->
+    <section class="mb-5">
+      <button id="showcaseBtn" type="button"
+        class="glass-card group relative flex w-full items-center gap-4 overflow-hidden rounded-2xl p-4 text-left">
+        <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 opacity-85"></div>
+        <div class="relative flex h-14 w-14 shrink-0 items-center justify-center">
+          <div class="spin-slow absolute inset-0 rounded-full border border-dashed border-cyan-400/45"></div>
+          <div class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-cyan-500 shadow-lg shadow-indigo-950/60">
+            <svg class="h-5 w-5 text-white translate-x-0.5" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="6 4 20 12 6 20 6 4"></polygon>
+            </svg>
+          </div>
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-400">Creative Focus</p>
+          <h2 class="text-base font-bold text-slate-100 sm:text-lg">Explore Skills &amp; Creative Craft</h2>
+          <p class="text-xs text-slate-400">Web Design • Graphics Design • Video Editing</p>
+        </div>
+        <span class="hidden rounded-full border border-indigo-500/35 bg-indigo-950/60 px-3 py-1 text-[11px] font-semibold text-indigo-200 sm:inline-block group-hover:border-cyan-400/50 group-hover:bg-cyan-950/50 group-hover:text-white transition">
+          View
+        </span>
+      </button>
+    </section>
+
+    <!-- Code Snippet Card -->
+    <section class="mb-8">
+      <div class="glass-card overflow-hidden rounded-2xl">
+        <div class="flex items-center justify-between border-b border-slate-800 bg-[#070a14]/90 px-4 py-2.5">
+          <div class="flex items-center gap-1.5">
+            <span class="h-2.5 w-2.5 rounded-full bg-rose-500/80"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-amber-400/80"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80"></span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="font-mono-code text-[11px] text-slate-400">redwan-rifat.js</span>
+            <button id="copyCodeBtn" type="button"
+              class="rounded-md border border-slate-700 bg-slate-900 px-2 py-0.5 text-[10px] font-medium text-slate-300 hover:border-cyan-400/60 hover:text-white transition">
+              Copy
+            </button>
+          </div>
+        </div>
+        <div class="font-mono-code overflow-x-auto bg-[#060912]/80 p-4 text-xs leading-6 sm:text-[13px]">
+          <div class="flex gap-4"><span class="select-none text-slate-600">1</span><span><span class="text-indigo-400">const</span> <span class="text-cyan-300">creator</span> <span class="text-slate-500">=</span> <span class="text-slate-300">{</span></span></div>
+          <div class="flex gap-4"><span class="select-none text-slate-600">2</span><span class="pl-4"><span class="text-slate-300">name:</span> <span class="text-emerald-300">"REDWAN RIFAT"</span>,</span></div>
+          <div class="flex gap-4"><span class="select-none text-slate-600">3</span><span class="pl-4"><span class="text-slate-300">skills:</span> [<span class="text-cyan-300">"Web Design"</span>, <span class="text-cyan-300">"Graphics"</span>, <span class="text-cyan-300">"Video Edit"</span>],</span></div>
+          <div class="flex gap-4"><span class="select-none text-slate-600">4</span><span class="pl-4"><span class="text-slate-300">study:</span> <span class="text-emerald-300">"Cantonment Public School &amp; College"</span>,</span></div>
+          <div class="flex gap-4"><span class="select-none text-slate-600">5</span><span class="pl-4"><span class="text-slate-300">home:</span> <span class="text-emerald-300">"Lalmonirhat, Rangpur"</span>,</span></div>
+          <div class="flex gap-4"><span class="select-none text-slate-600">6</span><span class="pl-4"><span class="text-slate-300">passion:</span> <span class="text-indigo-400">true</span></span></div>
+          <div class="flex gap-4"><span class="select-none text-slate-600">7</span><span><span class="text-slate-300">};</span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scroll Indicator -->
+    <div class="mb-10 flex flex-col items-center justify-center gap-1.5 text-center">
+      <a href="#skills" class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-500 hover:text-cyan-400 transition">Scroll</a>
+      <div class="h-5 w-px bg-gradient-to-b from-indigo-500/60 to-cyan-500/20"></div>
+    </div>
+
+    <!-- Interactive Skills Section -->
+    <section id="skills" class="mb-10 scroll-mt-20">
+      <div class="mb-4 flex items-center justify-between">
+        <div>
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400">// What I Love Doing</p>
+          <h2 class="text-xl font-bold text-slate-100 sm:text-2xl">Skills &amp; Expertise</h2>
+        </div>
+      </div>
+
+      <!-- Filter / Selector Pills -->
+      <div class="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Skill details">
+        <button type="button" data-skill="web" class="skill-pill active rounded-full border border-slate-700/70 bg-[#0b0f1c] px-4 py-1.5 text-xs font-semibold text-slate-200 transition">Web Design</button>
+        <button type="button" data-skill="graphics" class="skill-pill rounded-full border border-slate-700/70 bg-[#0b0f1c] px-4 py-1.5 text-xs font-semibold text-slate-200 transition">Graphics Design</button>
+        <button type="button" data-skill="video" class="skill-pill rounded-full border border-slate-700/70 bg-[#0b0f1c] px-4 py-1.5 text-xs font-semibold text-slate-200 transition">Video Edit</button>
+      </div>
+
+      <!-- Dynamic Skill Detail Card -->
+      <div id="skillDetailCard" class="glass-card rounded-2xl p-5">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span id="skillBadge" class="inline-block rounded-full bg-indigo-500/15 border border-indigo-400/30 px-3 py-0.5 text-[11px] font-semibold text-indigo-300">
+              Web Design
+            </span>
+            <h3 id="skillTitle" class="mt-2.5 text-lg font-bold text-slate-100">Modern &amp; Responsive Web Design</h3>
+            <p id="skillDesc" class="mt-1.5 text-sm leading-relaxed text-slate-400">
+              Designing sleek, mobile-first websites, personal portfolios, and landing pages with clean typography, smooth interactions, and bold visual themes.
+            </p>
+          </div>
+        </div>
+        <div id="skillTags" class="mt-4 flex flex-wrap gap-2">
+          <span class="rounded-lg bg-slate-900/90 px-2.5 py-1 text-xs text-indigo-300 border border-slate-700/70">Responsive UI</span>
+          <span class="rounded-lg bg-slate-900/90 px-2.5 py-1 text-xs text-cyan-300 border border-slate-700/70">Landing Pages</span>
+          <span class="rounded-lg bg-slate-900/90 px-2.5 py-1 text-xs text-indigo-300 border border-slate-700/70">Clean Code</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Location Section -->
+    <section id="about" class="mb-10 scroll-mt-20 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+      <div class="glass-card rounded-2xl p-4">
+        <div class="mb-2 flex items-center gap-2.5">
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+          </div>
+          <span class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.18em] text-indigo-300">Study</span>
+        </div>
+        <h3 class="text-sm font-bold text-slate-100 leading-snug">Cantonment Public School and College, Lalmonirhat</h3>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4">
+        <div class="mb-2 flex items-center gap-2.5">
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <span class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-300">Home</span>
+        </div>
+        <h3 class="text-sm font-bold text-slate-100">Lalmonirhat, Rangpur</h3>
+        <p class="mt-0.5 text-xs text-slate-400">Bangladesh</p>
+      </div>
+    </section>
+
+    <!-- Direct Message / Quick WhatsApp Composer -->
+    <section id="connect" class="scroll-mt-20">
+      <div class="glass-card rounded-2xl p-5">
+        <div class="mb-4">
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-300">// Get In Touch</p>
+          <h2 class="text-lg font-bold text-slate-100">Send a Quick Message</h2>
+        </div>
+        <form id="whatsappForm" class="space-y-3">
+          <div>
+            <label for="visitorName" class="mb-1 block text-xs font-medium text-slate-400">Your Name</label>
+            <input id="visitorName" type="text" placeholder="Enter your name"
+              class="w-full rounded-xl border border-slate-700/70 bg-[#060912]/90 px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none focus:border-cyan-400/70 transition" />
+          </div>
+          <div>
+            <label for="visitorMsg" class="mb-1 block text-xs font-medium text-slate-400">Message</label>
+            <textarea id="visitorMsg" rows="3" placeholder="Hi Redwan, I'd like to collaborate on a project..."
+              class="w-full rounded-xl border border-slate-700/70 bg-[#060912]/90 px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none focus:border-cyan-400/70 transition"></textarea>
+          </div>
+          <div class="flex flex-wrap items-center gap-2.5 pt-1">
+            <button type="submit"
+              class="cta-pill flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-bold text-white">
+              Send via WhatsApp
+            </button>
+            <button id="copyPhoneBtn" type="button"
+              class="rounded-xl border border-slate-700/70 bg-[#0c1120] px-4 py-2.5 text-sm font-semibold text-slate-200 hover:border-cyan-400/50 hover:text-white transition">
+              Copy Number
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+      <!-- Quick Banner to Favorites Page -->
+      <div class="mt-8">
+        <button id="openFavoritesCta" type="button"
+          class="glass-card group flex w-full items-center justify-between rounded-2xl p-4 text-left">
+          <div>
+            <p class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-400">// Explore More</p>
+            <h3 class="text-sm font-bold text-slate-100 sm:text-base">View My Favorites &amp; Bucket List</h3>
+            <p class="text-xs text-slate-400">Favorite Foods, Sports, Places &amp; Countries</p>
+          </div>
+          <span class="rounded-full border border-cyan-500/35 bg-cyan-950/50 px-3.5 py-1.5 text-xs font-semibold text-cyan-300 group-hover:bg-cyan-500/20 group-hover:text-white transition">
+            Open Page →
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Page 2: My Favorites -->
+    <div id="pageFavorites" class="hidden">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+          <span class="font-mono-code text-[11px] font-medium uppercase tracking-[0.2em] text-indigo-300">&lt;my_favorites /&gt;</span>
+        </div>
+        <button id="backToHomeBtn" type="button"
+          class="rounded-full border border-slate-700/80 bg-[#0b0f1c] px-3 py-1 text-xs font-semibold text-slate-300 hover:border-cyan-400/50 hover:text-white transition">
+          ← Back to Home
+        </button>
+      </div>
+
+      <section class="fav-stagger fav-d1 mb-7">
+        <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Personal Favorites</h1>
+        <p class="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">
+          A curated collection of the foods, sports, dream destinations, and countries I love the most.
+        </p>
+      </section>
+
+      <!-- Highlight: Most Favorite Place -->
+      <section class="fav-stagger fav-d2 mb-8">
+        <div class="glass-card relative overflow-hidden rounded-2xl p-5 border-cyan-400/30">
+          <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-400 via-cyan-400 to-indigo-500"></div>
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-300">Most Favorite Place</p>
+              <h2 class="mt-1 text-2xl font-extrabold text-white">Madinah</h2>
+              <p class="mt-1 text-xs text-slate-400">The most cherished and peaceful destination in my heart.</p>
+            </div>
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500/15 border border-amber-400/30 text-2xl">
+              🕌
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: Most Favorite Food -->
+      <section class="fav-stagger fav-d3 mb-8">
+        <div class="mb-3.5">
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400">// Cravings &amp; Classics</p>
+          <h2 class="text-lg font-bold text-slate-100 sm:text-xl">Most Favorite Food</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3">
+            <span class="text-xl">🍨</span>
+            <span class="text-sm font-semibold text-slate-100">Ice Cream</span>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3">
+            <span class="text-xl">🍫</span>
+            <span class="text-sm font-semibold text-slate-100">Chocolate</span>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3">
+            <span class="text-xl">🍛</span>
+            <span class="text-sm font-semibold text-slate-100">Bashumoti Kacchi</span>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3">
+            <span class="text-xl">🐟</span>
+            <span class="text-sm font-semibold text-slate-100">Fish Fry</span>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3">
+            <span class="text-xl">🍗</span>
+            <span class="text-sm font-semibold text-slate-100">Deshi Chicken</span>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3">
+            <span class="text-xl">🥤</span>
+            <span class="text-sm font-semibold text-slate-100">Faluda</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Favorite Sports -->
+      <section class="fav-stagger fav-d4 mb-8">
+        <div class="mb-3.5">
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-300">// Active Interests</p>
+          <h2 class="text-lg font-bold text-slate-100 sm:text-xl">Favorite Sports</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3.5">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-950/70 border border-indigo-500/30 text-xl">🏏</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-100">Cricket</h3>
+              <p class="text-xs text-slate-400">All-time favorite sport</p>
+            </div>
+          </div>
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3.5">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-950/70 border border-cyan-500/30 text-xl">🏸</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-100">Badminton</h3>
+              <p class="text-xs text-slate-400">Fast-paced court favorite</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Favorite Places (With Visited / Wishlist Status & Region Filter) -->
+      <section class="fav-stagger fav-d5 mb-8">
+        <div class="mb-3.5 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400">// Travel &amp; Bucket List</p>
+            <h2 class="text-lg font-bold text-slate-100 sm:text-xl">Favorite Places</h2>
+          </div>
+          <div class="flex flex-wrap gap-1.5" role="tablist" aria-label="Filter places by country">
+            <button type="button" data-region="all" class="region-tab active rounded-full border border-slate-700/70 bg-[#0b0f1c] px-3 py-1 text-[11px] font-semibold text-slate-300 transition">All</button>
+            <button type="button" data-region="Bangladesh" class="region-tab rounded-full border border-slate-700/70 bg-[#0b0f1c] px-3 py-1 text-[11px] font-semibold text-slate-300 transition">Bangladesh</button>
+            <button type="button" data-region="India" class="region-tab rounded-full border border-slate-700/70 bg-[#0b0f1c] px-3 py-1 text-[11px] font-semibold text-slate-300 transition">India</button>
+            <button type="button" data-region="Nepal" class="region-tab rounded-full border border-slate-700/70 bg-[#0b0f1c] px-3 py-1 text-[11px] font-semibold text-slate-300 transition">Nepal</button>
+          </div>
+        </div>
+        <div id="placesGrid" class="grid grid-cols-1 gap-2.5 sm:grid-cols-2"></div>
+      </section>
+
+      <!-- Section 4: Favorite Countries -->
+      <section class="fav-stagger fav-d6 mb-4">
+        <div class="mb-3.5">
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-300">// Dream Destinations</p>
+          <h2 class="text-lg font-bold text-slate-100 sm:text-xl">Favorite Countries</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3.5">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-950/70 border border-indigo-500/30 text-xl">🇨🇭</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-100">Switzerland</h3>
+              <p class="text-xs text-slate-400">Alpine beauty &amp; serene landscapes</p>
+            </div>
+          </div>
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3.5">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-950/70 border border-cyan-500/30 text-xl">🇮🇹</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-100">Italy</h3>
+              <p class="text-xs text-slate-400">Art, history &amp; timeless architecture</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 3: Family Introduction -->
+    <div id="pageFamily" class="hidden">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+          <span class="font-mono-code text-[11px] font-medium uppercase tracking-[0.2em] text-indigo-300">&lt;family_introduction /&gt;</span>
+        </div>
+        <button id="backHomeFromFamilyBtn" type="button"
+          class="rounded-full border border-slate-700/80 bg-[#0b0f1c] px-3 py-1 text-xs font-semibold text-slate-300 hover:border-cyan-400/50 hover:text-white transition">
+          ← Back to Home
+        </button>
+      </div>
+
+      <section class="fav-stagger fav-d1 mb-7">
+        <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Family Introduction</h1>
+        <p class="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">
+          The pillars of my life and my biggest source of strength — my beloved family.
+        </p>
+      </section>
+
+      <!-- Parents Section -->
+      <section class="fav-stagger fav-d2 mb-8">
+        <div class="mb-3.5">
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400">// Parents</p>
+          <h2 class="text-lg font-bold text-slate-100 sm:text-xl">Father &amp; Mother</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+          <div class="glass-card relative overflow-hidden rounded-2xl p-5">
+            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 to-cyan-400 opacity-85"></div>
+            <div class="mb-2.5 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-950/75 border border-indigo-500/30 text-sm font-bold text-indigo-300">F</div>
+              <span class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-300">Father</span>
+            </div>
+            <h3 class="text-base font-bold text-white sm:text-lg">MD. Rafiqul Islam</h3>
+          </div>
+
+          <div class="glass-card relative overflow-hidden rounded-2xl p-5">
+            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-85"></div>
+            <div class="mb-2.5 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-950/75 border border-cyan-500/30 text-sm font-bold text-cyan-300">M</div>
+              <span class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-300">Mother</span>
+            </div>
+            <h3 class="text-base font-bold text-white sm:text-lg">Mrs. Rokshana Begum</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- Brothers & Sister Section -->
+      <section class="fav-stagger fav-d3 mb-4">
+        <div class="mb-3.5">
+          <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-300">// Siblings</p>
+          <h2 class="text-lg font-bold text-slate-100 sm:text-xl">Brothers &amp; Sister</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-950/70 border border-indigo-500/30 text-sm font-bold text-indigo-300">R</div>
+            <div>
+              <div class="text-sm font-bold text-slate-100">Rafi</div>
+              <div class="font-mono-code text-[10px] text-slate-400">Sibling</div>
+            </div>
+          </div>
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-950/70 border border-cyan-500/30 text-sm font-bold text-cyan-300">A</div>
+            <div>
+              <div class="text-sm font-bold text-slate-100">Arabi</div>
+              <div class="font-mono-code text-[10px] text-slate-400">Sibling</div>
+            </div>
+          </div>
+          <div class="glass-card rounded-2xl p-4 flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-950/70 border border-indigo-500/30 text-sm font-bold text-indigo-300">R</div>
+            <div>
+              <div class="text-sm font-bold text-slate-100">Roja</div>
+              <div class="font-mono-code text-[10px] text-slate-400">Sibling</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 4: Best Friend -->
+    <div id="pageBestFriend" class="hidden">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+          <span class="font-mono-code text-[11px] font-medium uppercase tracking-[0.2em] text-indigo-300">&lt;best_friend /&gt;</span>
+        </div>
+        <button id="backHomeFromFriendBtn" type="button"
+          class="rounded-full border border-slate-700/80 bg-[#0b0f1c] px-3 py-1 text-xs font-semibold text-slate-300 hover:border-cyan-400/50 hover:text-white transition">
+          ← Back to Home
+        </button>
+      </div>
+
+      <section class="fav-stagger fav-d1 mb-7">
+        <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Best Friend</h1>
+        <p class="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">
+          A special dedication to the one who stood by me from the very beginning.
+        </p>
+      </section>
+
+      <!-- Highlight Card: Ariful Islam Roni -->
+      <section class="fav-stagger fav-d2 mb-7">
+        <div class="glass-card relative overflow-hidden rounded-2xl p-6">
+          <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-cyan-400 to-indigo-500"></div>
+          <div class="flex items-center gap-4">
+            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600/30 to-cyan-500/30 border border-cyan-400/35 text-lg font-extrabold text-cyan-200">
+              AR
+            </div>
+            <div>
+              <span class="inline-block rounded-full bg-cyan-500/15 border border-cyan-400/30 px-3 py-0.5 font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                My Childhood Brother
+              </span>
+              <h2 class="mt-1.5 text-2xl font-extrabold text-white sm:text-3xl">Ariful Islam Roni</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Special Lines Card -->
+      <section class="fav-stagger fav-d3 mb-7">
+        <div class="glass-card rounded-2xl p-6">
+          <p class="font-mono-code mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-300">// Special Lines For You</p>
+          <blockquote class="border-l-2 border-cyan-400/70 pl-4 text-sm leading-relaxed text-slate-200 sm:text-base">
+            "From childhood memories to every step of growing up, you have been more than just a best friend — you are my brother for life. Through every laugh, every tough day, and every dream ahead, no distance or time can ever fade the bond we share."
+          </blockquote>
+          <p class="mt-4 text-xs font-medium text-cyan-300/90">
+            Always grateful to have a real one like you by my side.
+          </p>
+        </div>
+      </section>
+
+      <!-- Bond Pillars -->
+      <section class="fav-stagger fav-d4 mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-400">01</div>
+          <h3 class="mt-1 text-sm font-bold text-slate-100">Childhood Roots</h3>
+          <p class="mt-1 text-xs text-slate-400">Countless memories built since day one.</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-indigo-300">02</div>
+          <h3 class="mt-1 text-sm font-bold text-slate-100">Always Real</h3>
+          <p class="mt-1 text-xs text-slate-400">Honest support in every high and low.</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-400">03</div>
+          <h3 class="mt-1 text-sm font-bold text-slate-100">Brother For Life</h3>
+          <p class="mt-1 text-xs text-slate-400">Not just a friend, family by choice.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 5: Samiya Zannat Minha (Password Protected) -->
+    <div id="pageMinha" class="hidden">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-rose-400 shadow-[0_0_8px_#fb7185]"></span>
+          <span class="font-mono-code text-[11px] font-medium uppercase tracking-[0.2em] text-rose-300">&lt;my_everything /&gt;</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="lockMinhaBtn" type="button"
+            class="hidden rounded-full border border-rose-500/35 bg-rose-950/30 px-3 py-1 text-xs font-semibold text-rose-200 hover:bg-rose-500/20 transition">
+            Lock Page
+          </button>
+          <button id="backHomeFromMinhaBtn" type="button"
+            class="rounded-full border border-slate-700/80 bg-[#0b0f1c] px-3 py-1 text-xs font-semibold text-slate-300 hover:border-rose-400/50 hover:text-white transition">
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+
+      <!-- Password Gate -->
+      <div id="minhaLockScreen" class="minha-card rounded-3xl p-6 sm:p-8 text-center">
+        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500/25 to-purple-600/25 border border-rose-400/35 text-rose-300">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <p class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.22em] text-rose-300">Private Sanctuary</p>
+        <h2 class="mt-1.5 text-2xl font-extrabold text-white">Protected Page</h2>
+        <p class="mx-auto mt-1.5 max-w-sm text-xs leading-relaxed text-slate-400">
+          This special page is reserved for someone close to my heart. Enter the secret password to unlock.
+        </p>
+
+        <form id="minhaUnlockForm" class="mx-auto mt-6 max-w-xs space-y-3 text-left">
+          <div class="relative">
+            <label for="minhaPasswordInput" class="sr-only">Password</label>
+            <input id="minhaPasswordInput" type="password" placeholder="Enter secret password" autocomplete="off"
+              class="w-full rounded-xl border border-rose-500/30 bg-[#07040d]/90 px-4 py-3 pr-16 text-sm text-white placeholder-slate-500 outline-none focus:border-rose-400 transition" />
+            <button id="togglePassBtn" type="button"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-rose-300/80 hover:text-white">
+              Show
+            </button>
+          </div>
+          <p id="minhaPassError" class="hidden text-center text-xs font-medium text-rose-400">
+            Incorrect password. Please try again.
+          </p>
+          <button type="submit"
+            class="w-full rounded-xl bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-rose-950/50 hover:brightness-110 transition">
+            Unlock Page
+          </button>
+        </form>
+      </div>
+
+      <!-- Unlocked Content -->
+      <div id="minhaUnlockedContent" class="hidden">
+        <!-- Hero Tribute -->
+        <section class="fav-stagger fav-d1 mb-7">
+          <span class="inline-block rounded-full border border-rose-400/35 bg-rose-500/15 px-3.5 py-1 font-mono-code text-[10px] font-semibold uppercase tracking-[0.22em] text-rose-300">
+            Life Partner • Wife • My Minu Pakhii
+          </span>
+          <h1 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <span class="bg-gradient-to-r from-white via-rose-200 to-pink-300 bg-clip-text text-transparent">Samiya Zannat Minha</span>
+          </h1>
+          <p class="mt-2 text-base font-medium text-rose-300">
+            A Future Doctor • Most Loving &amp; Most Caring Wife
+          </p>
+        </section>
+
+        <!-- Featured Card -->
+        <section class="fav-stagger fav-d2 mb-7">
+          <div class="minha-card relative overflow-hidden rounded-3xl p-6">
+            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-rose-500 via-pink-400 to-purple-500"></div>
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.2em] text-pink-300">My Everything</p>
+                <h2 class="mt-1 text-xl font-bold text-white">The Heartbeat of My World</h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-slate-300">
+                  With a healer's gentle hands and the purest heart, you bring peace, warmth, and endless love into every single day of my life.
+                </p>
+              </div>
+              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500/25 to-purple-600/25 border border-rose-400/35 text-rose-300">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Special Romantic Lines -->
+        <section class="fav-stagger fav-d3 mb-7">
+          <div class="minha-card rounded-3xl p-6">
+            <p class="font-mono-code mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">// Words From My Heart</p>
+            <blockquote class="space-y-3 border-l-2 border-rose-400/70 pl-4 text-sm leading-relaxed text-slate-200 sm:text-base">
+              <p>
+                "To my beloved Mehbuba — you are not just a chapter in my life, you are my entire story. Watching you chase your dream of becoming a doctor with such grace and dedication makes me prouder of you every single day."
+              </p>
+              <p>
+                "Thank you for being the most loving, most caring, and most understanding partner anyone could ever pray for. No matter what life brings, my hand will always be in yours, today, tomorrow, and forever."
+              </p>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- 3 Pillars of Her -->
+        <section class="fav-stagger fav-d4 mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="minha-card rounded-2xl p-4">
+            <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-300">01 • Dream</div>
+            <h3 class="mt-1 text-sm font-bold text-white">Future Doctor</h3>
+            <p class="mt-1 text-xs text-slate-400">Dedicated to healing others with kindness and strength.</p>
+          </div>
+          <div class="minha-card rounded-2xl p-4">
+            <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-pink-300">02 • Soul</div>
+            <h3 class="mt-1 text-sm font-bold text-white">Most Caring Wife</h3>
+            <p class="mt-1 text-xs text-slate-400">Turns every ordinary moment into a cherished memory.</p>
+          </div>
+          <div class="minha-card rounded-2xl p-4">
+            <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-300">03 • Forever</div>
+            <h3 class="mt-1 text-sm font-bold text-white">My Everything</h3>
+            <p class="mt-1 text-xs text-slate-400">My peace, my home, and my forever companion.</p>
+          </div>
+        </section>
+
+        <!-- 1-Line Admiration Section: Minu Pakhii, Eyes, Face, Mashallah -->
+        <section class="fav-stagger fav-d5 mt-7 mb-4">
+          <div class="mb-3.5">
+            <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">// Little Things I Adore</p>
+            <h2 class="text-lg font-bold text-white sm:text-xl">Pure Grace, Mashallah</h2>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-pink-300">My Sweet Name For You</div>
+              <h3 class="mt-1 text-base font-bold text-white">Minu Pakhii</h3>
+              <p class="mt-1 text-xs leading-relaxed text-slate-300">The sweetest name I call the dearest soul in my entire world.</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-300">Her Eyes</div>
+              <h3 class="mt-1 text-base font-bold text-white">Mesmerizing Gaze</h3>
+              <p class="mt-1 text-xs leading-relaxed text-slate-300">Eyes so deep and captivating, they hold a quiet universe of their own.</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-300">Her Face</div>
+              <h3 class="mt-1 text-base font-bold text-white">Serene &amp; Radiant</h3>
+              <p class="mt-1 text-xs leading-relaxed text-slate-300">A gentle, glowing face that brings instant peace to my restless heart.</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-300">Blessed Beauty</div>
+              <h3 class="mt-1 text-base font-bold text-white">Mashallah</h3>
+              <p class="mt-1 text-xs leading-relaxed text-slate-300">Effortlessly graceful and breathtaking in every single way, Mashallah.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Minha's Favorite Food -->
+        <section class="fav-stagger fav-d6 mt-7">
+          <div class="mb-3.5">
+            <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">// Her Cravings</p>
+            <h2 class="text-lg font-bold text-white sm:text-xl">Favorite Food</h2>
+          </div>
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div class="minha-card rounded-2xl p-3.5 border-amber-400/35">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm font-bold text-white">Tea</span>
+                <span class="rounded-full bg-amber-500/20 border border-amber-400/35 px-2 py-0.5 text-[10px] font-semibold text-amber-300">Top Favorite</span>
+              </div>
+              <p class="mt-1 text-[11px] text-slate-400">Her absolute #1</p>
+            </div>
+            <div class="minha-card rounded-2xl p-3.5 flex items-center gap-2.5">
+              <span class="text-lg">🍜</span>
+              <span class="text-sm font-semibold text-slate-100">Ramen</span>
+            </div>
+            <div class="minha-card rounded-2xl p-3.5 flex items-center">
+              <span class="text-sm font-semibold text-slate-100">Dark Chocolate</span>
+            </div>
+            <div class="minha-card rounded-2xl p-3.5 flex items-center">
+              <span class="text-sm font-semibold text-slate-100">Sub Burger</span>
+            </div>
+            <div class="minha-card rounded-2xl p-3.5 flex items-center">
+              <span class="text-sm font-semibold text-slate-100">Fuska</span>
+            </div>
+            <div class="minha-card rounded-2xl p-3.5 flex items-center">
+              <span class="text-sm font-semibold text-slate-100">Biryani</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Minha's Favorite Places -->
+        <section class="fav-stagger fav-d7 mt-7">
+          <div class="mb-3.5">
+            <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-pink-300">// Dream Escapes</p>
+            <h2 class="text-lg font-bold text-white sm:text-xl">Favorite Places</h2>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-300">01</div>
+              <h3 class="mt-1 text-sm font-bold text-white">Kashmir</h3>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-pink-300">02</div>
+              <h3 class="mt-1 text-sm font-bold text-white">Cox's Bazaar</h3>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-300">03</div>
+              <h3 class="mt-1 text-sm font-bold text-white">Sajek Valley</h3>
+            </div>
+          </div>
+        </section>
+
+        <!-- Style, White Rose & Cosmetics -->
+        <section class="fav-stagger fav-d7 mt-7">
+          <div class="mb-3.5">
+            <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-purple-300">// Elegance &amp; Favorites</p>
+            <h2 class="text-lg font-bold text-white sm:text-xl">Style, Flower &amp; Cosmetics</h2>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-300">Most Favorite</div>
+              <h3 class="mt-1.5 text-sm font-bold text-white">Shari &amp; Benaroshi Shari</h3>
+              <p class="mt-1 text-xs text-slate-400">Timeless traditional grace</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-300">Favorite Flower</div>
+              <h3 class="mt-1.5 text-sm font-bold text-white">White Rose</h3>
+              <p class="mt-1 text-xs text-slate-400">Pure, gentle &amp; serene</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <div class="font-mono-code text-[10px] font-semibold uppercase tracking-[0.18em] text-pink-300">Favorite Cosmetics</div>
+              <h3 class="mt-1.5 text-sm font-bold text-white">Reshmi Churi, Ring &amp; Jhumka</h3>
+              <p class="mt-1 text-xs text-slate-400">Delicate everyday charm</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Loves Doing Most -->
+        <section class="fav-stagger fav-d8 mt-7 mb-4">
+          <div class="mb-3.5">
+            <p class="font-mono-code text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">// Comfort &amp; Passions</p>
+            <h2 class="text-lg font-bold text-white sm:text-xl">Loves Doing Most</h2>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div class="minha-card rounded-2xl p-4">
+              <h3 class="text-sm font-bold text-white">Sleeping</h3>
+              <p class="mt-1 text-xs text-slate-400">Peaceful rest &amp; cozy naps</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <h3 class="text-sm font-bold text-white">Read Literature</h3>
+              <p class="mt-1 text-xs text-slate-400">Getting lost in meaningful words</p>
+            </div>
+            <div class="minha-card rounded-2xl p-4">
+              <h3 class="text-sm font-bold text-white">Novels</h3>
+              <p class="mt-1 text-xs text-slate-400">Stories that touch the soul</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-10 border-t border-slate-800/80 pt-5 text-center text-xs text-slate-500">
+      © <span id="yearSpan"></span> <span class="font-semibold text-cyan-300">REDWAN RIFAT</span> • Lalmonirhat, Rangpur
+    </footer>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast"
+    class="pointer-events-none fixed bottom-5 left-1/2 z-50 -translate-x-1/2 translate-y-4 rounded-full border border-cyan-500/40 bg-[#0a0f1e]/95 px-4 py-2 text-xs font-semibold text-white opacity-0 shadow-xl backdrop-blur-md transition-all duration-300">
+    Copied!
+  </div>
+
+  <script>
+    // Standard Professional Hero Name Stagger Reveal (with 250ms initial delay + click-to-replay)
+    function runHeroAnimation() {
+      const el = document.getElementById("heroName");
+      if (!el) return;
+      const text = "REDWAN RIFAT";
+      el.innerHTML = "";
+      requestAnimationFrame(() => {
+        el.innerHTML = Array.from(text).map((ch, idx) => {
+          if (ch === " ") return `<span class="inline-block w-3"></span>`;
+          const delay = (0.35 + idx * 0.11).toFixed(3);
+          return `<span class="hero-char" style="animation-delay:${delay}s, 2.2s">${ch}</span>`;
+        }).join("");
+      });
+    }
+    window.addEventListener("load", runHeroAnimation);
+    const heroNameEl = document.getElementById("heroName");
+    if (heroNameEl) {
+      heroNameEl.style.cursor = "pointer";
+      heroNameEl.title = "Tap to replay intro animation";
+      heroNameEl.addEventListener("click", runHeroAnimation);
+    }
+
+    // Clearly Visible Coding Rain / Floating Code Snippets Background
+    (function initCodeCanvas() {
+      const canvas = document.getElementById("codeBgCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const tokens = [
+        "const", "</>", "{}", "=>", "01", "[]", "fn()", "return",
+        "import", "async", "<div/>", "css", "let", "true", "0xF4"
+      ];
+      let drops = [];
+      let width = 0;
+      let height = 0;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        const colWidth = 44;
+        const count = Math.max(12, Math.floor(width / colWidth));
+        drops = Array.from({ length: count }, (_, i) => ({
+          x: i * colWidth + 10,
+          y: Math.random() * height,
+          speed: 0.4 + Math.random() * 0.5,
+          token: tokens[Math.floor(Math.random() * tokens.length)],
+          isCyan: Math.random() > 0.45,
+          alpha: 0.24 + Math.random() * 0.22
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.font = "500 13px 'JetBrains Mono', monospace";
+        for (const d of drops) {
+          // Subtle trail lines above token
+          ctx.fillStyle = d.isCyan
+            ? `rgba(34, 211, 238, ${d.alpha * 0.22})`
+            : `rgba(99, 102, 241, ${d.alpha * 0.22})`;
+          ctx.fillRect(d.x + 4, d.y - 38, 1, 26);
+
+          // Crisp glowing code token
+          ctx.fillStyle = d.isCyan
+            ? `rgba(34, 211, 238, ${d.alpha})`
+            : `rgba(129, 140, 248, ${d.alpha})`;
+          ctx.fillText(d.token, d.x, d.y);
+
+          d.y += d.speed;
+          if (d.y > height + 45) {
+            d.y = -25;
+            d.token = tokens[Math.floor(Math.random() * tokens.length)];
+            d.isCyan = Math.random() > 0.45;
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener("resize", resize);
+      window.addEventListener("load", () => {
+        resize();
+        draw();
+      });
+    })();
+
+    const SKILL_DATA = {
+      web: {
+        badge: "Web Design",
+        title: "Modern & Responsive Web Design",
+        desc: "Designing sleek, mobile-first websites, personal portfolios, and landing pages with clean typography, smooth interactions, and bold visual themes.",
+        tags: ["Responsive UI", "Landing Pages", "Clean Code"]
+      },
+      graphics: {
+        badge: "Graphics Design",
+        title: "Creative Visual & Graphics Design",
+        desc: "Crafting eye-catching posters, social media visuals, thumbnails, and brand identities that stand out with balanced color and composition.",
+        tags: ["Social Media Posters", "Thumbnails", "Brand Visuals"]
+      },
+      video: {
+        badge: "Video Edit",
+        title: "Dynamic Video Editing & Storytelling",
+        desc: "Editing engaging reels, shorts, and cinematic cuts with clean transitions, color grading, and rhythmic pacing that keeps viewers hooked.",
+        tags: ["Reels & Shorts", "Color Grading", "Motion Cuts"]
+      }
+    };
+
+    const yearSpan = document.getElementById("yearSpan");
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+    // Toast helper
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.remove("opacity-0", "translate-y-4");
+      toast.classList.add("opacity-100", "translate-y-0");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add("opacity-0", "translate-y-4");
+        toast.classList.remove("opacity-100", "translate-y-0");
+      }, 2200);
+    }
+
+    // Clipboard helper with fallback
+    function copyText(text, successMsg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMsg)).catch(() => fallbackCopy(text, successMsg));
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        showToast(successMsg);
+      } catch (e) {
+        showToast("Copy failed");
+      }
+      document.body.removeChild(ta);
+    }
+
+    // Slide-out Side Drawer toggle
+    const menuBtn = document.getElementById("menuToggleBtn");
+    const closeDrawerBtn = document.getElementById("closeDrawerBtn");
+    const sideDrawer = document.getElementById("sideDrawer");
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+
+    function openDrawer() {
+      drawerBackdrop.classList.remove("hidden");
+      requestAnimationFrame(() => {
+        drawerBackdrop.classList.remove("opacity-0");
+        sideDrawer.classList.remove("translate-x-full");
+      });
+      menuBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeDrawer() {
+      drawerBackdrop.classList.add("opacity-0");
+      sideDrawer.classList.add("translate-x-full");
+      menuBtn.setAttribute("aria-expanded", "false");
+      setTimeout(() => drawerBackdrop.classList.add("hidden"), 280);
+    }
+
+    menuBtn.addEventListener("click", openDrawer);
+    closeDrawerBtn.addEventListener("click", closeDrawer);
+    drawerBackdrop.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeDrawer();
+    });
+
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      link.addEventListener("click", closeDrawer);
+    });
+
+    // Featured showcase button scrolls smoothly to skills
+    document.getElementById("showcaseBtn").addEventListener("click", () => {
+      const skillsEl = document.getElementById("skills");
+      if (skillsEl) skillsEl.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // Skill tabs
+    document.querySelectorAll(".skill-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-skill");
+        const data = SKILL_DATA[key];
+        if (!data) return;
+
+        document.querySelectorAll(".skill-pill").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        document.getElementById("skillBadge").textContent = data.badge;
+        document.getElementById("skillTitle").textContent = data.title;
+        document.getElementById("skillDesc").textContent = data.desc;
+        document.getElementById("skillTags").innerHTML = data.tags
+          .map((t, idx) => `<span class="rounded-lg bg-slate-900/90 px-2.5 py-1 text-xs ${idx % 2 === 0 ? "text-indigo-300" : "text-cyan-300"} border border-slate-700/70">${t}</span>`)
+          .join("");
+      });
+    });
+
+    // Copy code snippet
+    document.getElementById("copyCodeBtn").addEventListener("click", () => {
+      const code = `const creator = {\n  name: "REDWAN RIFAT",\n  skills: ["Web Design", "Graphics", "Video Edit"],\n  study: "Cantonment Public School & College",\n  home: "Lalmonirhat, Rangpur",\n  passion: true\n};`;
+      copyText(code, "Code snippet copied!");
+    });
+
+    // Copy phone buttons
+    document.getElementById("copyPhoneBtn").addEventListener("click", () => {
+      copyText("01735982166", "WhatsApp number copied!");
+    });
+    document.getElementById("copyLinkMenuBtn").addEventListener("click", () => {
+      closeDrawer();
+      copyText("01735982166", "WhatsApp number copied!");
+    });
+
+    // WhatsApp quick message form
+    document.getElementById("whatsappForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("visitorName").value.trim();
+      const msg = document.getElementById("visitorMsg").value.trim();
+      if (!msg) {
+        showToast("Please write a short message first");
+        return;
+      }
+      const fullText = name ? `Hi Redwan, I'm ${name}. ${msg}` : msg;
+      const url = `https://wa.me/8801735982166?text=${encodeURIComponent(fullText)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+    // Page Switching Logic (Home <-> Favorites)
+    const PLACES_DATA = [
+      { name: "Cox's Bazaar", region: "Bangladesh", visited: 1 },
+      { name: "Saint Martin", region: "Bangladesh", visited: 0 },
+      { name: "Sajek Valley", region: "Bangladesh", visited: 0 },
+      { name: "Sundarban", region: "Bangladesh", visited: 0 },
+      { name: "Jaflong", region: "Bangladesh", visited: 0 },
+      { name: "Debotakhum", region: "Bangladesh", visited: 0 },
+      { name: "Kashmir", region: "India", visited: 0 },
+      { name: "Dharamshala", region: "India", visited: 0 },
+      { name: "Pokhara", region: "Nepal", visited: 0 }
+    ];
+
+    let isMinhaUnlocked = false;
+
+    function switchPage(pageName, scrollTop = true) {
+      const homeEl = document.getElementById("pageHome");
+      const favEl = document.getElementById("pageFavorites");
+      const famEl = document.getElementById("pageFamily");
+      const friendEl = document.getElementById("pageBestFriend");
+      const minhaEl = document.getElementById("pageMinha");
+      if (!homeEl || !favEl || !famEl || !friendEl || !minhaEl) return;
+
+      homeEl.classList.toggle("hidden", pageName !== "home");
+      favEl.classList.toggle("hidden", pageName !== "favorites");
+      famEl.classList.toggle("hidden", pageName !== "family");
+      friendEl.classList.toggle("hidden", pageName !== "bestfriend");
+      minhaEl.classList.toggle("hidden", pageName !== "minha");
+
+      // Replay smooth staggered opening animation when sub-pages open
+      let animatedPage = null;
+      if (pageName === "favorites") animatedPage = favEl;
+      else if (pageName === "family") animatedPage = famEl;
+      else if (pageName === "bestfriend") animatedPage = friendEl;
+      else if (pageName === "minha" && isMinhaUnlocked) animatedPage = document.getElementById("minhaUnlockedContent");
+      if (animatedPage) {
+        animatedPage.classList.remove("fav-animate");
+        void animatedPage.offsetWidth;
+        animatedPage.classList.add("fav-animate");
+      }
+
+      document.querySelectorAll(".drawer-nav-item").forEach((item) => {
+        item.classList.toggle("active", item.getAttribute("data-drawer-page") === pageName);
+      });
+
+      if (scrollTop) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    const drawerHomeBtn = document.getElementById("drawerHomeBtn");
+    if (drawerHomeBtn) {
+      drawerHomeBtn.addEventListener("click", () => {
+        closeDrawer();
+        switchPage("home");
+      });
+    }
+
+    const openFavCta = document.getElementById("openFavoritesCta");
+    if (openFavCta) openFavCta.addEventListener("click", () => switchPage("favorites"));
+
+    const backHomeBtn = document.getElementById("backToHomeBtn");
+    if (backHomeBtn) backHomeBtn.addEventListener("click", () => switchPage("home"));
+
+    const goFavMenuBtn = document.getElementById("goFavoritesMenuBtn");
+    if (goFavMenuBtn) {
+      goFavMenuBtn.addEventListener("click", () => {
+        closeDrawer();
+        switchPage("favorites");
+      });
+    }
+
+    const goFamilyMenuBtn = document.getElementById("goFamilyMenuBtn");
+    if (goFamilyMenuBtn) {
+      goFamilyMenuBtn.addEventListener("click", () => {
+        closeDrawer();
+        switchPage("family");
+      });
+    }
+
+    const backHomeFromFamilyBtn = document.getElementById("backHomeFromFamilyBtn");
+    if (backHomeFromFamilyBtn) {
+      backHomeFromFamilyBtn.addEventListener("click", () => switchPage("home"));
+    }
+
+    const goFriendMenuBtn = document.getElementById("goFriendMenuBtn");
+    if (goFriendMenuBtn) {
+      goFriendMenuBtn.addEventListener("click", () => {
+        closeDrawer();
+        switchPage("bestfriend");
+      });
+    }
+
+    const backHomeFromFriendBtn = document.getElementById("backHomeFromFriendBtn");
+    if (backHomeFromFriendBtn) {
+      backHomeFromFriendBtn.addEventListener("click", () => switchPage("home"));
+    }
+
+    // Minha Page Navigation & Password Gate
+    const goMinhaMenuBtn = document.getElementById("goMinhaMenuBtn");
+    if (goMinhaMenuBtn) {
+      goMinhaMenuBtn.addEventListener("click", () => {
+        closeDrawer();
+        switchPage("minha");
+      });
+    }
+
+    const backHomeFromMinhaBtn = document.getElementById("backHomeFromMinhaBtn");
+    if (backHomeFromMinhaBtn) {
+      backHomeFromMinhaBtn.addEventListener("click", () => switchPage("home"));
+    }
+
+    const minhaPassInput = document.getElementById("minhaPasswordInput");
+    const togglePassBtn = document.getElementById("togglePassBtn");
+    const minhaPassError = document.getElementById("minhaPassError");
+    const minhaLockScreen = document.getElementById("minhaLockScreen");
+    const minhaUnlockedContent = document.getElementById("minhaUnlockedContent");
+    const lockMinhaBtn = document.getElementById("lockMinhaBtn");
+
+    if (togglePassBtn && minhaPassInput) {
+      togglePassBtn.addEventListener("click", () => {
+        const isPass = minhaPassInput.type === "password";
+        minhaPassInput.type = isPass ? "text" : "password";
+        togglePassBtn.textContent = isPass ? "Hide" : "Show";
+      });
+    }
+
+    const minhaUnlockForm = document.getElementById("minhaUnlockForm");
+    if (minhaUnlockForm) {
+      minhaUnlockForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const entered = minhaPassInput.value.trim();
+        if (entered === "RifatMinha369") {
+          isMinhaUnlocked = true;
+          minhaPassError.classList.add("hidden");
+          minhaLockScreen.classList.add("hidden");
+          minhaUnlockedContent.classList.remove("hidden");
+          lockMinhaBtn.classList.remove("hidden");
+          minhaPassInput.value = "";
+          minhaUnlockedContent.classList.remove("fav-animate");
+          void minhaUnlockedContent.offsetWidth;
+          minhaUnlockedContent.classList.add("fav-animate");
+        } else {
+          minhaPassError.classList.remove("hidden");
+          minhaLockScreen.classList.remove("shake-error");
+          void minhaLockScreen.offsetWidth;
+          minhaLockScreen.classList.add("shake-error");
+        }
+      });
+    }
+
+    if (lockMinhaBtn) {
+      lockMinhaBtn.addEventListener("click", () => {
+        isMinhaUnlocked = false;
+        minhaUnlockedContent.classList.add("hidden");
+        lockMinhaBtn.classList.add("hidden");
+        minhaLockScreen.classList.remove("hidden");
+        minhaPassError.classList.add("hidden");
+        showToast("Page locked");
+      });
+    }
+
+    document.querySelectorAll(".nav-link[data-jump='home']").forEach((link) => {
+      link.addEventListener("click", () => switchPage("home", false));
+    });
+
+    // Render Favorite Places with Region Filter
+    function renderPlaces(regionFilter) {
+      const grid = document.getElementById("placesGrid");
+      if (!grid) return;
+      const filtered = regionFilter === "all"
+        ? PLACES_DATA
+        : PLACES_DATA.filter((p) => p.region === regionFilter);
+
+      grid.innerHTML = filtered.map((place) => {
+        const isVisited = place.visited > 0;
+        const badgeClass = isVisited
+          ? "bg-emerald-500/15 border-emerald-400/35 text-emerald-300"
+          : "bg-slate-800/80 border-slate-700 text-slate-400";
+        const badgeText = isVisited ? `Visited (${place.visited})` : `Wishlist (0)`;
+        return `
+          <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-sm font-bold text-slate-100">${place.name}</div>
+              <div class="font-mono-code text-[11px] text-slate-400">${place.region}</div>
+            </div>
+            <span class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${badgeClass}">
+              ${badgeText}
+            </span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    document.querySelectorAll(".region-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".region-tab").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderPlaces(btn.getAttribute("data-region"));
+      });
+    });
+
+    renderPlaces("all");
+  </script>
+</body>
+</html>
